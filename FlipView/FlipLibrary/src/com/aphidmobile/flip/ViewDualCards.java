@@ -43,9 +43,12 @@ public class ViewDualCards {
   private boolean orientationVertical = true;
 
   public ViewDualCards(boolean orientationVertical) {
-    topCard.setOrientation(orientationVertical);
-    bottomCard.setOrientation(orientationVertical);
-    this.orientationVertical = orientationVertical;
+    setOrientation(orientationVertical);
+  }
+  public void setOrientation(boolean orientationVertical){
+	    topCard.setOrientation(orientationVertical);
+	    bottomCard.setOrientation(orientationVertical);
+	    this.orientationVertical = orientationVertical;
   }
 
   public int getIndex() {

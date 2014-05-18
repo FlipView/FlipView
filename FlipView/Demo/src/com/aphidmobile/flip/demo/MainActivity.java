@@ -75,6 +75,10 @@ public class MainActivity extends ListActivity {
 
   private List<? extends Map<String, ?>> getData() {
     List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
+    addItem(data, "FlipCalendarActivity", FlipCalendarActivity.class);
+    addItem(data, "FlipOrientationActivity", FlipOrientationActivity.class);
+    addItem(data, "FlipFowardActivity", FlipFowardActivity.class);
+    addItem(data, "FlipCycleActivity", FlipCycleActivity.class);
     addItem(data, "TextViews", FlipTextViewActivity.class);
     addItem(data, "Buttons", FlipButtonActivity.class);
     addItem(data, "Complex Layouts", FlipComplexLayoutActivity.class);

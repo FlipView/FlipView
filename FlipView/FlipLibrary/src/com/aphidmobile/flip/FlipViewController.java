@@ -50,7 +50,7 @@ public class FlipViewController extends AdapterView<Adapter> {
 
   public static interface ViewFlipListener {
 
-    void onViewFlipped(View view, int position);
+    void onViewFlipped(FlipViewController mFlipViewController,View view, int position);
   }
 
   private static final int MAX_RELEASED_VIEW_SIZE = 1;
@@ -163,6 +163,16 @@ public class FlipViewController extends AdapterView<Adapter> {
     this.flipOrientation = orientation;
     setupSurfaceView(context);
   }
+  
+  public void setOrientation(int orientation){
+	    this.flipOrientation = orientation;
+	    cards.setOrientation(flipOrientation == VERTICAL);
+	    refreshAllPages();
+  }
+  
+  public int getOrientation(){
+	  return flipOrientation;
+  }
 
   public Bitmap.Config getAnimationBitmapFormat() {
     return animationBitmapFormat;
@@ -255,6 +265,14 @@ public class FlipViewController extends AdapterView<Adapter> {
   public boolean onTouchEvent(MotionEvent event) {
     if (flipByTouchEnabled) {
       return cards.handleTouchEvent(event, true);
+    } else {
+      return false;
+    }
+  }
+  
+  public boolean onAutoEvent(boolean forward){
+    if (flipByTouchEnabled) {
+      return cards.handleTouchEvent(forward);
     } else {
       return false;
     }
@@ -561,16 +579,26 @@ public class FlipViewController extends AdapterView<Adapter> {
     }
   }
 
+//  void postHideFlipAnimation() {
+//    if (inFlipAnimation) {
+//      handler.post(new Runnable() {
+//        @Override
+//        public void run() {
+//          hideFlipAnimation();
+//        }
+//      });
+//    }
+//  }   
   void postHideFlipAnimation() {
-    if (inFlipAnimation) {
-      handler.post(new Runnable() {
-        @Override
-        public void run() {
-          hideFlipAnimation();
+      if (inFlipAnimation) {
+          handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+              hideFlipAnimation();
+            }
+          }, 200);
         }
-      });
-    }
-  }
+      }
 
   private void hideFlipAnimation() {
     if (inFlipAnimation) {
@@ -579,7 +607,7 @@ public class FlipViewController extends AdapterView<Adapter> {
       updateVisibleView(bufferIndex);
 
       if (onViewFlipListener != null) {
-        onViewFlipListener.onViewFlipped(bufferedViews.get(bufferIndex), adapterIndex);
+        onViewFlipListener.onViewFlipped(this,bufferedViews.get(bufferIndex), adapterIndex);
       }
 
       handler.post(new Runnable() {
