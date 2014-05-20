@@ -1,8 +1,21 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" 
-    android:orientation="horizontal">
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:layout_weight="1" >
+
+    <TextView
+        android:id="@+id/big_page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="大叶内容放假啊会计法快速的反击啊睡觉妇联卡大煞风景"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:background="#ff00ff" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
 
         <com.aphidmobile.flip.FlipViewController
             xmlns:flip="http://schemas.android.com/apk/res-auto"
@@ -19,5 +32,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             flip:orientation="vertical" />
+    </LinearLayout>
 
-</LinearLayout>
+</FrameLayout>

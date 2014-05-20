@@ -71,15 +71,15 @@ public class FlipCalendarActivity extends Activity {
 	    item_h1=mLayoutInflater.inflate(R.layout.calender_column_v2, null);
 		    flipView_h1_vl=(FlipViewController) item_h1.findViewById(R.id.flip_controller1);
 			    item_h1_vl_t=mLayoutInflater.inflate(R.layout.calender_item_h_vl_t, null);
-			    ((TextView)item_h1_vl_t.findViewById(R.id.textView1)).setText("第一页左边01");
-			    item_h1_vl_t.setBackgroundColor(0xffff0000);
+//			    ((TextView)item_h1_vl_t.findViewById(R.id.textView1)).setText("第一页左边01");
+//			    item_h1_vl_t.setBackgroundColor(0xffff0000);
 			    item_h1_vl_d=mLayoutInflater.inflate(R.layout.calender_item_h_vl_t, null);
 			    ((TextView)item_h1_vl_d.findViewById(R.id.textView1)).setText("第一页左边02");
 			    item_h1_vl_d.setBackgroundColor(0xffffff00);
 		    flipView_h1_vr=(FlipViewController) item_h1.findViewById(R.id.flip_controller2);
 				item_h1_vr_t=mLayoutInflater.inflate(R.layout.calender_item_h_vl_t, null);
-			    ((TextView)item_h1_vr_t.findViewById(R.id.textView1)).setText("第一页右边01");
-			    item_h1_vr_t.setBackgroundColor(0xff00ff00);
+//			    ((TextView)item_h1_vr_t.findViewById(R.id.textView1)).setText("第一页右边01");
+//			    item_h1_vr_t.setBackgroundColor(0xff00ff00);
 				item_h1_vr_d=mLayoutInflater.inflate(R.layout.calender_item_h_vl_t, null);
 			    ((TextView)item_h1_vr_d.findViewById(R.id.textView1)).setText("第一页右边02");
 			    item_h1_vr_d.setBackgroundColor(0xff00ffff);
@@ -87,15 +87,15 @@ public class FlipCalendarActivity extends Activity {
 	    item_h2=mLayoutInflater.inflate(R.layout.calender_column_v2, null);
 		    flipView_h2_vl=(FlipViewController) item_h2.findViewById(R.id.flip_controller1);
 			    item_h2_vl_t=mLayoutInflater.inflate(R.layout.calender_item_h_vl_t, null);
-			    ((TextView)item_h2_vl_t.findViewById(R.id.textView1)).setText("第二页左边01");
-			    item_h2_vl_t.setBackgroundColor(0xff00ffff);
+//			    ((TextView)item_h2_vl_t.findViewById(R.id.textView1)).setText("第二页左边01");
+//			    item_h2_vl_t.setBackgroundColor(0xff00ffff);
 			    item_h2_vl_d=mLayoutInflater.inflate(R.layout.calender_item_h_vl_t, null);
 			    ((TextView)item_h2_vl_d.findViewById(R.id.textView1)).setText("第二页左边02");
 			    item_h2_vl_d.setBackgroundColor(0xff00ff00);
 		    flipView_h2_vr=(FlipViewController) item_h2.findViewById(R.id.flip_controller2);
 			    item_h2_vr_t=mLayoutInflater.inflate(R.layout.calender_item_h_vl_t, null);
-			    ((TextView)item_h2_vr_t.findViewById(R.id.textView1)).setText("第二页右边01");
-			    item_h2_vr_t.setBackgroundColor(0xffffff00);
+//			    ((TextView)item_h2_vr_t.findViewById(R.id.textView1)).setText("第二页右边01");
+//			    item_h2_vr_t.setBackgroundColor(0xffffff00);
 			    item_h2_vr_d=mLayoutInflater.inflate(R.layout.calender_item_h_vl_t, null);
 			    ((TextView)item_h2_vr_d.findViewById(R.id.textView1)).setText("第二页右边02");
 			    item_h2_vr_d.setBackgroundColor(0xffff0000);
@@ -109,6 +109,8 @@ public class FlipCalendarActivity extends Activity {
     initFlip(flipViewH,item_h2,item_h1);
     calender_contnet.addView(flipViewH);
 
+    flipView_h1_vl.setSelection(1);
+    flipView_h1_vr.setSelection(1);
 	flipView_h2_vr.setSelection(1);
 	flipView_h1_vr.setSelection(1);
 	flipViewH.setSelection(1);
