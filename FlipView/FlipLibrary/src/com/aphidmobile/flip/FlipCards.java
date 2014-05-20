@@ -279,7 +279,7 @@ public class FlipCards {
     frontCards.abandonTexture();
     backCards.abandonTexture();
   }
-boolean cycle=false;
+
   public synchronized boolean handleTouchEvent(MotionEvent event, boolean isOnTouchEvent) {
     switch (event.getAction()) {
       case MotionEvent.ACTION_DOWN:
@@ -328,64 +328,6 @@ boolean cycle=false;
 //                accumulatedAngle += angleDelta;
 //              }
 
-          if(cycle){
-        	//Bounce the page for the first and the last page
-              if (frontCards.getIndex() == maxIndex - 1) { //the last page
-                if (accumulatedAngle > frontCards.getIndex() * 180) {
-                  accumulatedAngle -=frontCards.getIndex() * 180;
-                  swapCards();
-                  frontCards.resetWithIndex(frontCards.getIndex() + 1);
-                  backCards.resetWithIndex(0);
-                  controller.flippedToView(0, false);
-                }
-              }
-
-              if (accumulatedAngle < 0) {
-                accumulatedAngle =(maxIndex-1) * 180-accumulatedAngle;
-                frontCards.resetWithIndex(maxIndex-1);
-                backCards.resetWithIndex(0);
-                controller.flippedToView(maxIndex-1, false);
-              }
-              
-              int anglePageIndex = getPageIndexFromAngle(accumulatedAngle);
-              Log.d("WS","accumulatedAngle "+accumulatedAngle);
-              Log.d("WS","anglePageIndex "+anglePageIndex);
-
-              if (accumulatedAngle >= 0) {
-                if (anglePageIndex != frontCards.getIndex()) {
-                    Log.d("WS","frontCards "+frontCards.getIndex()+" backCards "+backCards.getIndex());
-                  if (anglePageIndex == frontCards.getIndex() - 1) { //moved to previous page
-                      Log.d("WS","anglePageIndex == frontCards.getIndex() - 1 ");
-                    swapCards(); //frontCards becomes the backCards
-                    frontCards.resetWithIndex(backCards.getIndex() - 1);
-                    controller.flippedToView(anglePageIndex, false);
-                  } else if (anglePageIndex == frontCards.getIndex() + 1) { //moved to next page
-                      Log.d("WS","anglePageIndex == frontCards.getIndex() + 1");
-                    swapCards();
-                    backCards.resetWithIndex(frontCards.getIndex() + 1);
-                    controller.flippedToView(anglePageIndex, false);
-                  } else if(anglePageIndex==0&&frontCards.getIndex()==maxIndex-1){
-                      Log.d("WS","anglePageIndex==0&&frontCards.getIndex()==maxIndex-1");
-                	  swapCards();
-                	  frontCards.resetWithIndex(0);
-                      backCards.resetWithIndex(frontCards.getIndex() + 1);
-                      controller.flippedToView(anglePageIndex, false);
-                  }else if(anglePageIndex==maxIndex-1&&frontCards.getIndex()==0){
-                      Log.d("WS","anglePageIndex==maxIndex-1&&frontCards.getIndex()==0");
-                	  swapCards(); //frontCards becomes the backCards
-                      frontCards.resetWithIndex(maxIndex-1);
-                      backCards.resetWithIndex(0);
-                      controller.flippedToView(anglePageIndex, false);
-                  }else {
-                    throw new RuntimeException(AphidLog.format(
-                        "Inconsistent states: anglePageIndex: %d, accumulatedAngle %.1f, frontCards %d, backCards %d",
-                        anglePageIndex, accumulatedAngle, frontCards.getIndex(), backCards.getIndex()));
-                  }
-                  Log.d("WS","---frontCards "+frontCards.getIndex()+" backCards "+backCards.getIndex());
-                }
-              }
-          }else{
-
           //Bounce the page for the first and the last page
           if (frontCards.getIndex() == maxIndex - 1) { //the last page
             if (accumulatedAngle > frontCards.getIndex() * 180) {
@@ -420,7 +362,6 @@ boolean cycle=false;
         		  }
         	  }
           }
-        }
 
 
           lastPosition = orientationVertical ? event.getY() : event.getX();
