@@ -22,16 +22,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.aphidmobile.flip.FlipViewController;
-import com.aphidmobile.flip.FlipViewController.ViewFlipListener;
-import com.aphidmobile.flip.demo.views.NumberButton;
 import com.aphidmobile.flipview.demo.R;
 
-public class FlipFowardActivity extends Activity {
+public class FlipTransparentItemActivity extends Activity {
 
   private FlipViewController flipView;
-  boolean forward=true;
 
   /**
    * Called when the activity is first created.
@@ -42,24 +40,7 @@ public class FlipFowardActivity extends Activity {
 
     setTitle(R.string.activity_title);
 
-    flipView = new FlipViewController(this, FlipViewController.VERTICAL);
-    flipView.setOnViewFlipListener(new ViewFlipListener() {
-		
-		@Override
-		public void onViewFlipped(final FlipViewController mFlipViewController,
-				View view,final int position) {
-
-		    flipView.postDelayed(new Runnable() {
-				
-				@Override
-				public void run() {
-//					forward=!forward;
-					flipView.setSelection(1);
-					flipView.onAutoEvent(forward);
-				}
-			}, 2000);
-		}
-	});
+    flipView = new FlipViewController(this);
 
     flipView.setAdapter(new BaseAdapter() {
       @Override
@@ -79,30 +60,28 @@ public class FlipFowardActivity extends Activity {
 
       @Override
       public View getView(int position, View convertView, ViewGroup parent) {
-        NumberButton button;
+        TextView button;
         if (convertView == null) {
           final Context context = parent.getContext();
-          button = new NumberButton(context, position);
+          button = new TextView(context);
           button.setTextSize(context.getResources().getDimension(R.dimen.textSize));
         } else {
-          button = (NumberButton) convertView;
-          button.setNumber(position);
+          button = (TextView) convertView;
         }
 
+        if(position==1){
+        	button.setBackgroundColor(0x00ff0000);
+            button.setText(position+"");
+        }else{
+        	button.setBackgroundColor(0xffff00ff);
+            button.setText(position+"");
+        }
+        
         return button;
       }
     });
 
-    setContentView(flipView); 
-    flipView.setSelection(1);
-    flipView.postDelayed(new Runnable() {
-		
-		@Override
-		public void run() {
-			// TODO Auto-generated method stub
-			flipView.onAutoEvent(forward);
-		}
-	}, 2000);
+    setContentView(flipView);
   }
 
   @Override

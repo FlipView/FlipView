@@ -20,19 +20,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aphidmobile.flip.FlipViewController;
 import com.aphidmobile.flip.FlipViewController.ViewFlipListener;
+import com.aphidmobile.flip.GrabIt;
 import com.aphidmobile.flipview.demo.R;
 
 public class FlipCalendarActivity extends Activity {
@@ -43,6 +46,7 @@ public class FlipCalendarActivity extends Activity {
 		
 		private FlipViewController flipViewH;
 			View item_h1;
+				TextView big_page1;
 				private FlipViewController flipView_h1_vl;
 					View item_h1_vl_t;
 					View item_h1_vl_d;
@@ -50,12 +54,20 @@ public class FlipCalendarActivity extends Activity {
 					View item_h1_vr_t;
 					View item_h1_vr_d;
 			View item_h2;
+				TextView big_page2;
 				private FlipViewController flipView_h2_vl;
 					View item_h2_vl_t;
 					View item_h2_vl_d;
 				private FlipViewController flipView_h2_vr;
 					View item_h2_vr_t;
 					View item_h2_vr_d;
+					
+	Bitmap[]bitmaps=new Bitmap[2];
+	ImageView imageView1,imageView2;
+	ImageView img1;
+	ImageView img1_r;
+	ImageView img2;
+	ImageView img2_r;
 
   /**
    * Called when the activity is first created.
@@ -67,8 +79,16 @@ public class FlipCalendarActivity extends Activity {
     calender_contnet=(LinearLayout) findViewById(R.id.calender_contnet);
     mLayoutInflater=LayoutInflater.from(this);
 
+    imageView1=(ImageView) findViewById(R.id.imageView1);
+    imageView2=(ImageView) findViewById(R.id.imageView2);
+	img1=new ImageView(this);
+	img1_r=new ImageView(this);
+	img2=new ImageView(this);
+	img2_r=new ImageView(this);
     flipViewH=new FlipViewController(this,FlipViewController.HORIZONTAL);
 	    item_h1=mLayoutInflater.inflate(R.layout.calender_column_v2, null);
+		    big_page1=(TextView)item_h1.findViewById(R.id.big_page);
+		    big_page1.setText("这是大页1，");
 		    flipView_h1_vl=(FlipViewController) item_h1.findViewById(R.id.flip_controller1);
 			    item_h1_vl_t=mLayoutInflater.inflate(R.layout.calender_item_h_vl_t, null);
 //			    ((TextView)item_h1_vl_t.findViewById(R.id.textView1)).setText("第一页左边01");
@@ -85,6 +105,9 @@ public class FlipCalendarActivity extends Activity {
 			    item_h1_vr_d.setBackgroundColor(0xff00ffff);
 	    
 	    item_h2=mLayoutInflater.inflate(R.layout.calender_column_v2, null);
+		    big_page2=(TextView)item_h2.findViewById(R.id.big_page);
+		    big_page2.setBackgroundColor(0xff0000ff);
+		    big_page2.setText("这是大页2，");
 		    flipView_h2_vl=(FlipViewController) item_h2.findViewById(R.id.flip_controller1);
 			    item_h2_vl_t=mLayoutInflater.inflate(R.layout.calender_item_h_vl_t, null);
 //			    ((TextView)item_h2_vl_t.findViewById(R.id.textView1)).setText("第二页左边01");
@@ -102,20 +125,21 @@ public class FlipCalendarActivity extends Activity {
 
     setTitle(R.string.activity_title);
 
-    initFlip(flipView_h1_vl,item_h1_vl_t,item_h1_vl_d);
-    initFlip(flipView_h1_vr,item_h1_vr_d,item_h1_vr_t);
-    initFlip(flipView_h2_vl,item_h2_vl_t,item_h2_vl_d);
-    initFlip(flipView_h2_vr,item_h2_vr_d,item_h2_vr_t);
-    initFlip(flipViewH,item_h2,item_h1);
+    initFlip(flipView_h1_vl,img1,item_h1_vl_d);
+    initFlip(flipView_h1_vr,item_h1_vr_d,img1_r);
+    initFlip(flipView_h2_vl,img2,item_h2_vl_d);
+    initFlip(flipView_h2_vr,item_h2_vr_d,img2_r);
+    initFlip(flipViewH,item_h1,item_h2);
     calender_contnet.addView(flipViewH);
 
-    flipView_h1_vl.setSelection(1);
-    flipView_h1_vr.setSelection(0);
-	flipView_h2_vr.setSelection(1);
-	flipView_h1_vr.setSelection(0);
+    flipView_h1_vl.setSelection(0);
+    flipView_h1_vr.setSelection(1);
+	flipView_h2_vl.setSelection(1);
+	flipView_h2_vr.setSelection(0);
 	flipViewH.setSelection(1);
 
 
+	ItemUpdate1();
     mHandler.postDelayed(new Runnable() {
 		
 		@Override
@@ -126,11 +150,11 @@ public class FlipCalendarActivity extends Activity {
 	}, 3000);
 
     addmFlipViewController(flipViewH);
-  addmFlipViewController(flipView_h2_vl);
-    addmFlipViewController(flipView_h2_vr);
-    addmFlipViewController(flipViewH);
     addmFlipViewController(flipView_h1_vl);
     addmFlipViewController(flipView_h1_vr);
+    addmFlipViewController(flipViewH);
+    addmFlipViewController(flipView_h2_vl);
+    addmFlipViewController(flipView_h2_vr);
   }
   
   Handler mHandler=new Handler(){
@@ -164,12 +188,14 @@ public class FlipCalendarActivity extends Activity {
 			if(mFlipViewController.equals(flipViewH)){
 				if(flipViewH.getOrientation()==FlipViewController.HORIZONTAL){
 					flipViewH.setOrientation(FlipViewController.VERTICAL);
-					flipView_h1_vl.setSelection(0);
-					flipView_h1_vr.setSelection(1);
-				}else{
-					flipViewH.setOrientation(FlipViewController.HORIZONTAL);
+					ItemUpdate1();
 					flipView_h2_vl.setSelection(0);
 					flipView_h2_vr.setSelection(1);
+				}else{
+		    		  ItemUpdate2();
+					flipViewH.setOrientation(FlipViewController.HORIZONTAL);
+					flipView_h1_vl.setSelection(0);
+					flipView_h1_vr.setSelection(1);
 				}
 			}
 			curent++;
@@ -236,4 +262,31 @@ public class FlipCalendarActivity extends Activity {
 	    });
 
 	  }
+	public void ItemUpdate1(){
+  	  Bitmap bitmap=GrabIt.takeScreenshot(big_page1,Bitmap.Config.ARGB_8888);
+  	  bitmaps=GrabIt.divideBitmap(bitmap, bitmaps);
+  	  if(bitmap!=null){
+  		  bitmap.recycle();
+  	  }
+	  	 if(bitmaps[0]!=null){
+	  		img1.setImageBitmap(bitmaps[0]);
+	  		img1_r.setImageBitmap(bitmaps[1]);
+			  imageView1.setImageBitmap(bitmaps[0]);
+			  imageView2.setImageBitmap(bitmaps[1]);
+	  	 }
+	}
+	public void ItemUpdate2(){
+	  	  Bitmap bitmap=GrabIt.takeScreenshot(big_page2,Bitmap.Config.ARGB_8888);
+	  	  bitmaps=GrabIt.divideBitmap(bitmap, bitmaps);
+	  	  if(bitmap!=null){
+	  		  bitmap.recycle();
+	  	  }
+	  	 if(bitmaps[0]!=null){
+	  		img2.setImageBitmap(bitmaps[0]);
+	  		img2_r.setImageBitmap(bitmaps[1]);
+			  imageView1.setImageBitmap(bitmaps[0]);
+			  imageView2.setImageBitmap(bitmaps[1]);
+		  }
+		}
+	    
 }

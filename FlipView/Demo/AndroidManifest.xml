@@ -21,6 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.aphidmobile.flip.demo.FlipCalendarActivity" />
+        <activity android:name="com.aphidmobile.flip.demo.FlipTransparentItemActivity" />
         <activity android:name="com.aphidmobile.flip.demo.FlipOrientationActivity" />
         <activity android:name="com.aphidmobile.flip.demo.FlipFowardActivity" />
         <activity android:name="com.aphidmobile.flip.demo.FlipCycleActivity" />

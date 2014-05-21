@@ -18,6 +18,7 @@ package com.aphidmobile.flip;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.view.View;
 
 import com.aphidmobile.utils.AphidLog;
@@ -46,5 +47,25 @@ public class GrabIt {
     } else {
       return null;
     }
+  }
+  public static Bitmap[] divideBitmap(Bitmap mBitmap,Bitmap[] mBitmaps){
+	    if (mBitmap != null) {
+	    	int width = mBitmap.getWidth();
+	  	  int height = mBitmap.getHeight();
+	  	  if(mBitmaps!=null&&mBitmaps.length<2){
+	  		mBitmaps=new Bitmap[2];
+	  	  }
+	  	  if(mBitmaps[0]==null){
+	  		mBitmaps[0]=Bitmap.createBitmap(width>>1, height, mBitmap.getConfig());
+	  	  }
+	  	  Canvas canvas = new Canvas(mBitmaps[0]);
+	  	  canvas.drawBitmap(mBitmap, new Rect(0,0,width>>1,height), new Rect(0,0,width>>1,height), null);
+	  	if(mBitmaps[1]==null){
+	  		mBitmaps[1]=Bitmap.createBitmap(width>>1, height, mBitmap.getConfig());
+	  	  }
+	  	canvas = new Canvas(mBitmaps[1]);
+	  	canvas.drawBitmap(mBitmap, new Rect(width>>1,0,width,height), new Rect(0,0,width>>1,height), null);
+	    }
+	  return mBitmaps;
   }
 }
