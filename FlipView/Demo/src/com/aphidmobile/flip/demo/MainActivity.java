@@ -16,6 +16,11 @@ limitations under the License.
 
 package com.aphidmobile.flip.demo;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
@@ -27,12 +32,8 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import com.aphidmobile.flip.calender.FlipCalendar2Activity;
 import com.aphidmobile.flipview.demo.R;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class MainActivity extends ListActivity {
 
@@ -75,6 +76,7 @@ public class MainActivity extends ListActivity {
 
   private List<? extends Map<String, ?>> getData() {
     List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
+    addItem(data, "FlipCalendar2Activity", FlipCalendar2Activity.class);
     addItem(data, "FlipCalendarActivity", FlipCalendarActivity.class);
     addItem(data, "FlipOrientationActivity", FlipOrientationActivity.class);
     addItem(data, "FlipFowardActivity", FlipFowardActivity.class);

@@ -39,7 +39,8 @@ public class FlipCalendarActivity extends Activity {
 	public static final String TAG=FlipCalendarActivity.class.getSimpleName();
 
 	LayoutInflater mLayoutInflater;
-	LinearLayout calender_contnet;
+	/**view content*/
+	LinearLayout calender_content;
 		
 		private FlipViewController flipViewH;
 			View item_h1;
@@ -64,11 +65,12 @@ public class FlipCalendarActivity extends Activity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.filp_calender);
-    calender_contnet=(LinearLayout) findViewById(R.id.calender_contnet);
+    calender_content=(LinearLayout) findViewById(R.id.calender_contnet);
     mLayoutInflater=LayoutInflater.from(this);
 
     flipViewH=new FlipViewController(this,FlipViewController.HORIZONTAL);
 	    item_h1=mLayoutInflater.inflate(R.layout.calender_column_v2, null);
+	    ((TextView)item_h1.findViewById(R.id.big_page)).setText("大页大页大页111111111111111111111111111111111111111111");
 		    flipView_h1_vl=(FlipViewController) item_h1.findViewById(R.id.flip_controller1);
 			    item_h1_vl_t=mLayoutInflater.inflate(R.layout.calender_item_h_vl_t, null);
 //			    ((TextView)item_h1_vl_t.findViewById(R.id.textView1)).setText("第一页左边01");
@@ -85,6 +87,7 @@ public class FlipCalendarActivity extends Activity {
 			    item_h1_vr_d.setBackgroundColor(0xff00ffff);
 	    
 	    item_h2=mLayoutInflater.inflate(R.layout.calender_column_v2, null);
+	    ((TextView)item_h2.findViewById(R.id.big_page)).setText("大页大页大页2222222222222222222222222222222222222222222222");
 		    flipView_h2_vl=(FlipViewController) item_h2.findViewById(R.id.flip_controller1);
 			    item_h2_vl_t=mLayoutInflater.inflate(R.layout.calender_item_h_vl_t, null);
 //			    ((TextView)item_h2_vl_t.findViewById(R.id.textView1)).setText("第二页左边01");
@@ -107,7 +110,7 @@ public class FlipCalendarActivity extends Activity {
     initFlip(flipView_h2_vl,item_h2_vl_t,item_h2_vl_d);
     initFlip(flipView_h2_vr,item_h2_vr_d,item_h2_vr_t);
     initFlip(flipViewH,item_h2,item_h1);
-    calender_contnet.addView(flipViewH);
+    calender_content.addView(flipViewH);
 
     flipView_h1_vl.setSelection(1);
     flipView_h1_vr.setSelection(1);
@@ -126,11 +129,11 @@ public class FlipCalendarActivity extends Activity {
 	}, 3000);
 
     addmFlipViewController(flipViewH);
-  addmFlipViewController(flipView_h2_vl);
-    addmFlipViewController(flipView_h2_vr);
+//    addmFlipViewController(flipView_h2_vl);
+//    addmFlipViewController(flipView_h2_vr);
     addmFlipViewController(flipViewH);
-    addmFlipViewController(flipView_h1_vl);
-    addmFlipViewController(flipView_h1_vr);
+//    addmFlipViewController(flipView_h1_vl);
+//    addmFlipViewController(flipView_h1_vr);
   }
   
   Handler mHandler=new Handler(){
@@ -161,7 +164,7 @@ public class FlipCalendarActivity extends Activity {
 		
 		@Override
 		public void onViewFlipped(FlipViewController mFlipViewController,View view, int position) {
-			if(mFlipViewController.equals(flipViewH)){
+			if(mFlipViewController.equals(flipViewH)){//左到右 和下到上 交替
 				if(flipViewH.getOrientation()==FlipViewController.HORIZONTAL){
 					flipViewH.setOrientation(FlipViewController.VERTICAL);
 					flipView_h1_vl.setSelection(0);
